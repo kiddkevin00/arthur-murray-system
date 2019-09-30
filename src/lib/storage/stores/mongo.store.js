@@ -24,6 +24,12 @@ class MongoStore extends BaseStore {
       .updateAsync(query, { $set: newFieldValueMap }, { multi: true });
   }
 
+  static async upsert(connection, collectionName, query, obj) {
+    return connection.client
+      .collection(collectionName)
+      .update(query, obj, { upsert: true });
+  }
+
   static delete(connection, collectionName, query) {
     return connection.client.collection(collectionName).removeAsync(query);
   }
