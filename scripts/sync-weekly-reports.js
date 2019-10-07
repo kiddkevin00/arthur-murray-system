@@ -17,7 +17,15 @@ const arthurMurrayHttpClient = axios.create({
   baseURL: arthurMurrayUrl,
 });
 
-const fetchReportsFromOfficialSource = async () => {
+repo.on(conn, 'connect').then(() => {
+  console.log('Connection established successfully.');
+});
+
+repo.on(conn, 'error').then(printErrorMsg);
+
+const fetchReportsFromOfficialSource = async (week) => {
+  const currentTime = new Date();
+  const yearNumber = currentTime.getFullYear();
   const { data: { access_token: accessToken } } = await arthurMurrayHttpClient.get('/oauth/v2/token', {
     params: {
       client_id: '5cb9f3803b7750216d34f772_4pfk2m5bhyuccc48kc4c8ooow04sscgsc0s4cggk88kkw8g00s',
@@ -31,8 +39,8 @@ const fetchReportsFromOfficialSource = async () => {
   return arthurMurrayHttpClient.get('/api/v1/statistics/sps', {
     params: {
       frozen: true,
-      week_number: new Date().getWeek(), // to current
-      week_year: new Date().getFullYear(),
+      week_number: week,
+      week_year: yearNumber,
       access_token: accessToken,
     },
   });
@@ -55,13 +63,6 @@ const syncStudios = async () => {
 
   allWeeksData = allWeeksData.filter(week => week.sps.length)
 
-  repo.on(conn, 'connect').then(() => {
-    console.log('Connection established successfullweekNumbery.');
-  });
-
-  repo.on(conn, 'error').then(printErrorMsg);
-
-
   Promise.try(() => {
     const promises = [];
     for (let i = 0; i < allWeeksData.length; i++) {
@@ -76,12 +77,14 @@ const syncStudios = async () => {
         }
       }
     }
-
+    console.log(`${promises.length} rows detected`);
     return Promise.all(promises);
   })
-    .then(() => repo.select(conn, tableName))
-    .then(validateResult.bind(null, 'inserting'))
-    .then(() => repo.close(conn))
+    .then(() => {
+      console.log("Successfully insert all the datas")
+      repo.close(conn)
+      console.log("Closed connection")
+    })
     .catch(printErrorMsg);
 };
 

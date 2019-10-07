@@ -27,7 +27,7 @@ class MongoStore extends BaseStore {
   static async upsert(connection, collectionName, query, obj) {
     return connection.client
       .collection(collectionName)
-      .update(query, obj, { upsert: true });
+      .updateAsync(query, obj, { upsert: true });
   }
 
   static delete(connection, collectionName, query) {

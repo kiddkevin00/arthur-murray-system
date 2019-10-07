@@ -19,20 +19,21 @@ Promise.promisifyAll([
 class ConnectionPool {
   constructor(storeType = constants.STORE.TYPES.MONGO_DB, host, port, dbName, dbUser, dbPassword) {
     const packageJsonDbConfig = packageJson.config.databases[storeType];
+    const mongoUrl = process.env.MONGO_URL;
 
     this.client = null;
-    this.host = host || packageJsonDbConfig.host;
-    this.port = port || packageJsonDbConfig.port;
-    this.dbName = dbName || packageJsonDbConfig.dbName;
-    this.dbUser = dbUser;
-    this.dbPassword = dbPassword;
+    this.host = process.env.HOST || host || packageJsonDbConfig.host;
+    this.port = process.env.PORT || port || packageJsonDbConfig.port;
+    this.dbName = process.env.DBNAME || dbName || packageJsonDbConfig.dbName;
+    this.dbUser = process.env.USER || dbUser;
+    this.dbPassword = process.env.PASSWORD || dbPassword;
 
     switch (storeType) {
       case constants.STORE.TYPES.MONGO_DB:
         if (this.dbUser && this.dbPassword) {
-          this.client = mongojs(
-            `mongodb://${this.dbUser}:${this.dbPassword}@${this.host}:` +
-              `${this.port}/${this.dbName}`,
+          this.client = mongojs(mongoUrl ||
+            (`mongodb://${this.dbUser}:${this.dbPassword}@${this.host}:` +
+              `${this.port}/${this.dbName}`),
             [],
             packageJsonDbConfig.options
           );
@@ -48,7 +49,7 @@ class ConnectionPool {
         if (this.dbUser && this.dbPassword) {
           this.client = new Sequelize(
             `postgres://${this.dbUser}:${this.dbPassword}@${this.host}:` +
-              `${this.port}/${this.dbName}`,
+            `${this.port}/${this.dbName}`,
             packageJsonDbConfig.options
           );
         } else {
