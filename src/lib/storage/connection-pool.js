@@ -19,7 +19,7 @@ Promise.promisifyAll([
 class ConnectionPool {
   constructor(storeType = constants.STORE.TYPES.MONGO_DB, host, port, dbName, dbUser, dbPassword) {
     const packageJsonDbConfig = packageJson.config.databases[storeType];
-    const mongoUrl = process.env.MONGO_URL;
+    const mongoUrl = process.env.MONGODB_URI;
 
     this.client = null;
     this.host = process.env.HOST || host || packageJsonDbConfig.host;
