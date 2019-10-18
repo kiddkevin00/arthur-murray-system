@@ -17,7 +17,7 @@ class MongoStore extends BaseStore {
     if (isReplacing) {
       return connection.client
         .collection(collectionName)
-        .findAndModify(query, newFieldValueMap, { multi: true });
+        .findAndModify({ query, update: { $set: newFieldValueMap }, new: true });
     }
     return connection.client
       .collection(collectionName)
