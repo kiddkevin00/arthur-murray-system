@@ -1,6 +1,7 @@
 const ValidationError = require('../utils/validation-error');
 const constants = require('../constants/');
 
+// eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
   if (err instanceof ValidationError) {
     return res.status(constants.SYSTEM.HTTP_STATUS_CODES.BAD_REQUEST).send(err.message);
