@@ -17,7 +17,7 @@ class MongoStore extends BaseStore {
     if (isReplacing) {
       return connection.client
         .collection(collectionName)
-        .findAndModify({ query, update: { $set: newFieldValueMap }, new: true });
+        .findAndModifyAsync({ query, update: { newFieldValueMap }, new: true }); // Not support bulk update at the same time.
     }
     return connection.client
       .collection(collectionName)
