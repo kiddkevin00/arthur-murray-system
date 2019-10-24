@@ -31,9 +31,10 @@ class ConnectionPool {
     switch (storeType) {
       case constants.STORE.TYPES.MONGO_DB:
         if (this.dbUser && this.dbPassword) {
-          this.client = mongojs(mongoUrl ||
-            (`mongodb://${this.dbUser}:${this.dbPassword}@${this.host}:` +
-              `${this.port}/${this.dbName}`),
+          this.client = mongojs(
+            mongoUrl ||
+              `mongodb://${this.dbUser}:${this.dbPassword}@${this.host}:` +
+                `${this.port}/${this.dbName}`,
             [],
             packageJsonDbConfig.options
           );
@@ -49,7 +50,7 @@ class ConnectionPool {
         if (this.dbUser && this.dbPassword) {
           this.client = new Sequelize(
             `postgres://${this.dbUser}:${this.dbPassword}@${this.host}:` +
-            `${this.port}/${this.dbName}`,
+              `${this.port}/${this.dbName}`,
             packageJsonDbConfig.options
           );
         } else {
