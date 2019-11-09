@@ -49,12 +49,12 @@ const subscribe = async (req, res) => {
 const getStudio = async (req, res) => {
   const studioName = req.params.studio;
 
-  repo.select(conn, tableName, { name: studioName }).then(data => {
-    return res.json(data);
-  });
+  const data = await repo.select(conn, tableName, { name: studioName });
+
+  return res.status(constants.SYSTEM.HTTP_STATUS_CODES.CREATED).json(data);
 };
 
 module.exports = exports = {
   subscribe: tryMiddlewareDecorator(subscribe),
-  getStudio,
+  getStudio: tryMiddlewareDecorator(getStudio),
 };
