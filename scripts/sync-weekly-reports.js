@@ -67,7 +67,7 @@ const flattenObject = obj => {
   return flattened;
 };
 
-const syncStudios = async () => {
+const syncWeeklyReports = async () => {
   try {
     const today = new Date();
     const weekNumber = today.getWeek();
@@ -174,4 +174,4 @@ function printErrorMsg(err) {
   console.log(`Something breaks - ${err}`);
 }
 
-syncStudios();
+syncWeeklyReports();

@@ -22,11 +22,11 @@ class ConnectionPool {
     const mongoUrl = process.env.MONGODB_URI;
 
     this.client = null;
-    this.host = process.env.HOST || host || packageJsonDbConfig.host;
-    this.port = process.env.PORT || port || packageJsonDbConfig.port;
-    this.dbName = process.env.DBNAME || dbName || packageJsonDbConfig.dbName;
-    this.dbUser = process.env.USER || dbUser;
-    this.dbPassword = process.env.PASSWORD || dbPassword;
+    this.host = process.env.DB_HOST || host || packageJsonDbConfig.host;
+    this.port = process.env.DB_PORT || port || packageJsonDbConfig.port;
+    this.dbName = process.env.DB_NAME || dbName || packageJsonDbConfig.dbName;
+    this.dbUser = process.env.DB_USER || dbUser;
+    this.dbPassword = process.env.DB_PASSWORD || dbPassword;
 
     switch (storeType) {
       case constants.STORE.TYPES.MONGO_DB:

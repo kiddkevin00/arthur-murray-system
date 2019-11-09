@@ -48,6 +48,7 @@
   "scripts": {
     "------------- EXPOSED -------------": "",
     "start": "node --stack-size=65500 src/lib/app.js",
+    "sync-weekly-reports": "DB_HOST=ds329058.mlab.com DB_PORT=29058 DB_USER=heroku_mhmqnwln DB_PASSWORD=uj36dr1n881e9ltn1jrlj4s5j0 DB_NAME=heroku_mhmqnwln ./scripts/sync-weekly-reports.js",
     "lint": "eslint --format 'node_modules/eslint-friendly-formatter' --ext .js src/ examples/ bin/ scripts/",
     "unit-test": "cat src/spec/support/run_all_the_tests.txt; npm run mocha-unit-test",
     "integration-test": "",
