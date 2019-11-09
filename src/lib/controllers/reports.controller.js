@@ -2,6 +2,18 @@ const DatabaseService = require('../services/database.service');
 const tryMiddlewareDecorator = require('../utils/try-middleware-decorator');
 const Validator = require('../utils/precondition-validator');
 const constants = require('../constants/');
+const storage = require('../storage/');
+
+const { ConnectionPool, RepoFactory } = storage;
+const conn = new ConnectionPool(constants.STORE.TYPES.MONGO_DB);
+const repo = RepoFactory.manufacture(constants.STORE.TYPES.MONGO_DB);
+const tableName = 'financeReport';
+
+repo.on(conn, 'connect').then(() => {
+  console.log('Connection established successfully.');
+});
+
+repo.on(conn, 'error').then(err => console.log(err));
 
 const subscribe = async (req, res) => {
   const email = req.body.email && req.body.email.trim();
@@ -34,6 +46,15 @@ const subscribe = async (req, res) => {
   return res.status(constants.SYSTEM.HTTP_STATUS_CODES.CREATED).json(result);
 };
 
+const getStudio = async (req, res) => {
+  const studioName = req.params.studio;
+
+  repo.select(conn, tableName, { name: studioName }).then(data => {
+    return res.json(data);
+  });
+};
+
 module.exports = exports = {
   subscribe: tryMiddlewareDecorator(subscribe),
+  getStudio,
 };

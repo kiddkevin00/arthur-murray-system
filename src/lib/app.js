@@ -18,7 +18,9 @@ setupExpressServer(app);
 setupRoutes(app);
 
 const ip = process.env.IP || packageJson.config.ip;
-const port = process.env.PORT || packageJson.config.port;
+const port = process.env.HTTPPORT || packageJson.config.port;
+
+console.log(process.env.PORT, port);
 
 const webServer = server.listen(port, ip, () => {
   console.log(

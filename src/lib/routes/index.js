@@ -2,7 +2,7 @@
  * This is the place for exposing module(s) for route component.
  */
 
-const reportsRoutes = require('./reports/');
+const reportsRoutes = require('./reports');
 const errorHandlerMiddleware = require('../middlewares/error-handler');
 const constants = require('../constants/');
 const packageJson = require('../../../package.json');
@@ -37,7 +37,6 @@ function setupRoutes(app) {
       },
     })
   );
-
   app.use(`/api/v${majorVersion}`, setupApiRoutes());
 
   // All not-found API endpoints should return a custom 404 page.

@@ -8,7 +8,9 @@ class PreconditionValidator {
       Object.is(value, '') ||
       (typeof value === 'string' && value.trim().length === 0)
     ) {
-      throw new ValidationError(`The provided value \`${value}\` for ${fieldName} field should not be empty.`);
+      throw new ValidationError(
+        `The provided value \`${value}\` for ${fieldName} field should not be empty.`
+      );
     }
     return PreconditionValidator;
   }
@@ -41,7 +43,9 @@ class PreconditionValidator {
     }
 
     if (!Array.isArray(array)) {
-      throw new ValidationError(`The provided value \`${input}\` should be an array or an array text.`);
+      throw new ValidationError(
+        `The provided value \`${input}\` should be an array or an array text.`
+      );
     }
 
     for (const element of array) {
