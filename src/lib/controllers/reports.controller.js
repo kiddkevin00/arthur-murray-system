@@ -7,7 +7,6 @@ const storage = require('../storage/');
 const { ConnectionPool, RepoFactory } = storage;
 const conn = new ConnectionPool(constants.STORE.TYPES.MONGO_DB);
 const repo = RepoFactory.manufacture(constants.STORE.TYPES.MONGO_DB);
-const tableName = 'financeReport';
 
 repo.on(conn, 'connect').then(() => {
   console.log('Connection established successfully.');
@@ -47,11 +46,22 @@ const subscribe = async (req, res) => {
 };
 
 const getStudio = async (req, res) => {
-  const studioName = req.params.studio;
+  const studio = req.params.studio && req.params.studio.trim();
 
-  const data = await repo.select(conn, tableName, { name: studioName });
+  Validator.shouldNotBeEmpty(studio, 'studio');
 
-  return res.status(constants.SYSTEM.HTTP_STATUS_CODES.CREATED).json(data);
+  const getStudioStrategy = {
+    storeType: constants.STORE.TYPES.MONGO_DB,
+    operation: {
+      type: constants.STORE.OPERATIONS.SELECT,
+      data: [{ name: studio }],
+    },
+    tableName: constants.STORE.TABLE_NAMES.FINANCEREPORT,
+  };
+
+  const result = await DatabaseService.execute(getStudioStrategy);
+
+  return res.status(constants.SYSTEM.HTTP_STATUS_CODES.CREATED).json(result);
 };
 
 module.exports = exports = {

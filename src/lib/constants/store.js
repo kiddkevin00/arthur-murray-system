@@ -18,4 +18,5 @@ exports.OPERATIONS = {
 
 exports.TABLE_NAMES = {
   REPORT: 'report',
+  FINANCEREPORT: 'financeReport',
 };
