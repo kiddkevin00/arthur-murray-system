@@ -126,13 +126,14 @@ const syncWeeklyReports = async () => {
             currOriginalSold += s.original_sold;
             currExtensionSold += s.extension_sold;
             lessonsTaught += s.lessons_interviewed + s.lessons_renewed;
-            lessonsSold +=
-              s.pre_original_units + s.original_units + s.extension_units + s.renewal_units;
+            s.weeklyLessonsSold = s.pre_original_units + s.original_units + s.extension_units + s.renewal_units;
+            lessonsSold += s.weeklyLessonsSold;
             s.originalSoldVsExtensionSold =
               currOriginalSold === 0 || currExtensionSold === 0
                 ? 0
                 : currExtensionSold / currOriginalSold;
-            s.lessonsSold = lessonsSold;
+            s.yearToDateLessonsSold = lessonsSold;
+
             s.lessonsTaughtVsLessonsSold =
               lessonsTaught === 0 || lessonsSold === 0 ? 0 : lessonsTaught / lessonsSold;
             return s;
