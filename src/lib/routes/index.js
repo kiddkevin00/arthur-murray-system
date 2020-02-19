@@ -3,6 +3,7 @@
  */
 
 const reportsRoutes = require('./reports');
+const paymentRoutes = require('./payment');
 const errorHandlerMiddleware = require('../middlewares/error-handler');
 const constants = require('../constants/');
 const packageJson = require('../../../package.json');
@@ -62,6 +63,7 @@ function setupApiRoutes() {
   const router = Router();
 
   router.use('/reports', reportsRoutes);
+  router.use('/payment', paymentRoutes);
 
   return router;
 }

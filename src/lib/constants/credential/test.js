@@ -1,0 +1,3 @@
+exports.STRIPE = {
+  PRIVATE_KEY: 'TEST_STRIPE_PRIVATE_KEY',
+};
