@@ -9,7 +9,13 @@ class MongoStore extends BaseStore {
     return connection.client.collection(collectionName).saveAsync(newDoc);
   }
 
-  static async select(connection, collectionName, query = {}) {
+  static async select(connection, collectionName, query = {}, sortParams) {
+    if (sortParams) {
+      return connection.client
+        .collection(collectionName)
+        .find(query)
+        .sortAsync(sortParams);
+    }
     return connection.client.collection(collectionName).findAsync(query);
   }
 

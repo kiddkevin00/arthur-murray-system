@@ -12,14 +12,14 @@ const getStudio = async (req, res) => {
     storeType: constants.STORE.TYPES.MONGO_DB,
     operation: {
       type: constants.STORE.OPERATIONS.SELECT,
-      data: [{ name: studio }],
+      data: [{ name: studio }, { submitted_weeks: -1 }],
     },
     tableName: constants.STORE.TABLE_NAMES.FINANCEREPORT,
   };
 
   const result = await DatabaseService.execute(getStudioStrategy);
 
-  return res.status(constants.SYSTEM.HTTP_STATUS_CODES.CREATED).json(result);
+  return res.status(constants.SYSTEM.HTTP_STATUS_CODES.OK).json(result);
 };
 
 module.exports = exports = {
