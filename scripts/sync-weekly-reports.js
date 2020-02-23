@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict'; // eslint-disable-line strict, lines-around-directive
+
 const storage = require('../src/lib/storage/');
 const constants = require('../src/lib/constants/');
 
@@ -13,7 +15,7 @@ const repo = RepoFactory.manufacture(constants.STORE.TYPES.MONGO_DB);
 
 const tableName = 'financeReport';
 
-const arthurMurrayUrl = 'https://api.arthurmurrayfranchisee.com';
+const arthurMurrayUrl = 'https://reporting.arthurmurray.com';
 const arthurMurrayHttpClient = axios.create({
   baseURL: arthurMurrayUrl,
 });
@@ -24,15 +26,13 @@ repo.on(conn, 'connect').then(() => {
 
 repo.on(conn, 'error').then(printErrorMsg);
 
-const fetchReportsFromOfficialSource = async week => {
-  const currentTime = new Date();
-  const yearNumber = currentTime.getFullYear();
+const fetchReportsFromOfficialSource = async (week, yearNumber) => {
   const {
     data: { access_token: accessToken },
   } = await arthurMurrayHttpClient.get('/oauth/v2/token', {
     params: {
-      client_id: '5cb9f3803b7750216d34f772_4pfk2m5bhyuccc48kc4c8ooow04sscgsc0s4cggk88kkw8g00s',
-      client_secret: '52963dmdve88ow4o8ggk0g80k000k0g4s0k00k0kso8coswssw',
+      client_id: '5e4ab19f047c2a16883c6f58_5ranbk2z53kssgkwc8sc0kgww8o8ko0444k004co8ws4s48w4k',
+      client_secret: '3sctxu7wz06c8w0oko0ow4sog8kg08o4k80gkkw4k8wwcow4ws',
       grant_type: 'password',
       username: 'info@dancecomp.org',
       password: 'dance1',
@@ -67,11 +67,10 @@ const flattenObject = obj => {
   return flattened;
 };
 
-const syncWeeklyReports = async () => {
+const syncWeeklyReports = async yearNumber => {
   try {
     const today = new Date();
     const weekNumber = today.getWeek();
-    const yearNumber = today.getFullYear();
     const weeks = [];
 
     for (let i = 1; i <= weekNumber; i += 1) {
@@ -80,7 +79,7 @@ const syncWeeklyReports = async () => {
 
     let allWeeksData = await Promise.all(
       weeks.map(async week => {
-        const { data: reportsResData } = await fetchReportsFromOfficialSource(week);
+        const { data: reportsResData } = await fetchReportsFromOfficialSource(week, yearNumber);
 
         reportsResData.weekNumber = week;
         return reportsResData;
@@ -146,11 +145,12 @@ const syncWeeklyReports = async () => {
 
     for (let i = 0; i < validStudioData.length; i += 1) {
       promises.push(
-        repo.upsert(
+        repo.update(
           conn,
           tableName,
           { name: validStudioData[i].name, submitted_weeks: validStudioData[i].submitted_weeks },
-          validStudioData[i]
+          validStudioData[i],
+          true
         )
       );
     }
@@ -175,4 +175,6 @@ function printErrorMsg(err) {
   console.log(`Something breaks - ${err}`);
 }
 
-syncWeeklyReports();
+const yearNumber = process.argv[process.argv.length - 1];
+
+syncWeeklyReports(/20[0-9]{2}/.test(yearNumber) ? yearNumber : new Date().getFullYear());

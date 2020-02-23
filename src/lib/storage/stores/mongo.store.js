@@ -23,15 +23,11 @@ class MongoStore extends BaseStore {
     if (isReplacing) {
       return connection.client
         .collection(collectionName)
-        .findAndModifyAsync({ query, update: { newFieldValueMap }, new: true }); // Not support bulk update at the same time.
+        .updateAsync(query, newFieldValueMap, { upsert: true });
     }
     return connection.client
       .collection(collectionName)
       .updateAsync(query, { $set: newFieldValueMap }, { multi: true });
-  }
-
-  static async upsert(connection, collectionName, query, obj) {
-    return connection.client.collection(collectionName).updateAsync(query, obj, { upsert: true });
   }
 
   static delete(connection, collectionName, query) {
