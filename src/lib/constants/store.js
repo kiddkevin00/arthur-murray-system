@@ -18,5 +18,6 @@ exports.OPERATIONS = {
 
 exports.TABLE_NAMES = {
   REPORT: 'report',
-  FINANCEREPORT: 'financeReport',
+  FINANCE_REPORT: 'financeReport',
+  EVENT: 'event',
 };

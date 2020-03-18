@@ -15,7 +15,7 @@ const proceed = async (req, res) => {
   await stripe.charges.create({
     amount: chargeAmount,
     currency: 'usd',
-    description: 'Payment for Royalty Fee',
+    description: `Payment for Royalty Fee ${userInfo.studio && `from ${userInfo.studio}`}`,
     source: token,
     metadata: { ...userInfo },
     statement_descriptor_suffix: 'ROYALTYFEE',
