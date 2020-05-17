@@ -21,17 +21,17 @@ const getAllEvents = async (req, res) => {
 const createEvent = async (req, res) => {
   const name = req.body.name && req.body.name.trim();
   const description = req.body.description && req.body.description.trim();
-  const { date } = req.body;
+  const { dateInterval } = req.body;
 
   Validator.shouldNotBeEmpty(name, 'name');
   Validator.shouldNotBeEmpty(description, 'description');
-  Validator.shouldNotBeEmpty(date, 'date');
+  Validator.shouldNotBeEmpty(dateInterval, 'dateInterval');
 
   const createEventsStrategy = {
     storeType: constants.STORE.TYPES.MONGO_DB,
     operation: {
       type: constants.STORE.OPERATIONS.INSERT,
-      data: [{ name, description, date }],
+      data: [{ name, description, dateInterval }],
     },
     tableName: constants.STORE.TABLE_NAMES.EVENT,
   };
