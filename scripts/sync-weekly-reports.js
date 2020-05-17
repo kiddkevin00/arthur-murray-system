@@ -107,7 +107,6 @@ const syncWeeklyReports = async yearNumber => {
 
     const groupByName = _.groupBy(validStudioData, 'name');
 
-    /* eslint-disable */
     for (const studios in groupByName) {
       if (groupByName.hasOwnProperty(studios)) {
         let currOriginalSold = 0;
@@ -118,6 +117,7 @@ const syncWeeklyReports = async yearNumber => {
         groupByName[studios]
           .sort((s1, s2) => s1.submitted_weeks - s2.submitted_weeks)
           .map(s => {
+            /* eslint-disable no-param-reassign */
             s.miscellaneousVsGross = s.cash === 0 ? 0 : s.cash / (s.cash + s.miscellaneous);
             s.bookedVsContact = s.booked === 0 || s.contact === 0 ? 0 : s.booked / s.contact;
             s.showedVsOriginalSold =
@@ -125,7 +125,8 @@ const syncWeeklyReports = async yearNumber => {
             currOriginalSold += s.original_sold;
             currExtensionSold += s.extension_sold;
             lessonsTaught += s.lessons_interviewed + s.lessons_renewed;
-            s.weeklyLessonsSold = s.pre_original_units + s.original_units + s.extension_units + s.renewal_units;
+            s.weeklyLessonsSold =
+              s.pre_original_units + s.original_units + s.extension_units + s.renewal_units;
             lessonsSold += s.weeklyLessonsSold;
             s.originalSoldVsExtensionSold =
               currOriginalSold === 0 || currExtensionSold === 0
@@ -135,10 +136,10 @@ const syncWeeklyReports = async yearNumber => {
 
             s.lessonsTaughtVsLessonsSold =
               lessonsTaught === 0 || lessonsSold === 0 ? 0 : lessonsTaught / lessonsSold;
+            /* eslint-enable no-param-reassign */
             return s;
           });
       }
-      /* eslint-disable */
     }
 
     const promises = [];
@@ -165,7 +166,8 @@ const syncWeeklyReports = async yearNumber => {
   }
 };
 
-Date.prototype.getWeek = function () {
+// eslint-disable-next-line no-extend-native
+Date.prototype.getWeek = function() {
   const onejan = new Date(this.getFullYear(), 0, 1);
 
   return Math.ceil(((this - onejan) / 86400000 + onejan.getDay() + 1) / 7);
