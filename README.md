@@ -1,4 +1,4 @@
-# Play Nice Backend Core
+# Arthur Murray System
 
 A RESTful JSON API backend with MongoDB and Postgres database.
 
