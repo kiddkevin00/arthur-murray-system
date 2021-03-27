@@ -30,21 +30,7 @@ class ConnectionPool {
 
     switch (storeType) {
       case constants.STORE.TYPES.MONGO_DB:
-        if (this.dbUser && this.dbPassword) {
-          this.client = mongojs(
-            mongoUrl ||
-              `mongodb://${this.dbUser}:${this.dbPassword}@${this.host}:` +
-                `${this.port}/${this.dbName}`,
-            [],
-            packageJsonDbConfig.options
-          );
-        } else {
-          this.client = mongojs(
-            `mongodb://${this.host}:${this.port}/${this.dbName}`,
-            [],
-            packageJsonDbConfig.options
-          );
-        }
+        this.client = mongojs(mongoUrl);
         break;
       case constants.STORE.TYPES.POSTGRES:
         if (this.dbUser && this.dbPassword) {
