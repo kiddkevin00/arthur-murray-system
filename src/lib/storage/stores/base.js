@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-const constants = require('../../constants/');
+const constants = require('../../constants');
 
 /**
  * This class defines the base store interface and implements the advanced ones, which only

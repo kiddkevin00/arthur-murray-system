@@ -2,8 +2,8 @@
 
 'use strict'; // eslint-disable-line strict, lines-around-directive
 
-const storage = require('../src/lib/storage/');
-const constants = require('../src/lib/constants/');
+const storage = require('../src/lib/storage');
+const constants = require('../src/lib/constants');
 
 const axios = require('axios');
 const Promise = require('bluebird');

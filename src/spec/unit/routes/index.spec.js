@@ -1,4 +1,4 @@
-const setupRoutes = require('../../../lib/routes/');
+const setupRoutes = require('../../../lib/routes');
 const packageJson = require('../../../../package.json');
 
 describe('Routes setup', function() {

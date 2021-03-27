@@ -1,5 +1,5 @@
 const Validator = require('../utils/precondition-validator');
-const constants = require('../constants/');
+const constants = require('../constants');
 const tryMiddlewareDecorator = require('../utils/try-middleware-decorator');
 const stripeApi = require('stripe');
 

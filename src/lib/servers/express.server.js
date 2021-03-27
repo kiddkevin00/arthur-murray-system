@@ -1,4 +1,4 @@
-const constants = require('../constants/');
+const constants = require('../constants');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');

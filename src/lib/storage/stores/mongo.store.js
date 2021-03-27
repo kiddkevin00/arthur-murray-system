@@ -1,5 +1,5 @@
 const BaseStore = require('./base');
-const constants = require('../../constants/');
+const constants = require('../../constants');
 
 /**
  * This class implements the base store interface.  It should only contain static members.

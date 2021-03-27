@@ -1,6 +1,6 @@
-const storage = require('../storage/');
+const storage = require('../storage');
 const packageJson = require('../../../package.json');
-const constants = require('../constants/');
+const constants = require('../constants');
 
 const { ConnectionPool, RepoFactory } = storage;
 

@@ -1,7 +1,7 @@
 const DatabaseService = require('../services/database.service');
 const tryMiddlewareDecorator = require('../utils/try-middleware-decorator');
 const Validator = require('../utils/precondition-validator');
-const constants = require('../constants/');
+const constants = require('../constants');
 
 const getStudioReports = async (req, res) => {
   const studio = req.params.studio && req.params.studio.trim();

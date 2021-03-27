@@ -1,4 +1,4 @@
-const authRouter = require('../../../../lib/routes/reports/');
+const authRouter = require('../../../../lib/routes/reports');
 
 describe('Reports router', function() {
   it('should have all the endpoints registered', function() {

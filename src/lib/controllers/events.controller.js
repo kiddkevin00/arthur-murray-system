@@ -1,7 +1,7 @@
 const Validator = require('../utils/precondition-validator');
 const DatabaseService = require('../services/database.service');
 const tryMiddlewareDecorator = require('../utils/try-middleware-decorator');
-const constants = require('../constants/');
+const constants = require('../constants');
 
 const getAllEvents = async (req, res) => {
   const getAllEventsStrategy = {

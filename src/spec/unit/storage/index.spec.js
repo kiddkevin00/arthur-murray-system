@@ -1,4 +1,4 @@
-const storeModule = require('../../../lib/storage/');
+const storeModule = require('../../../lib/storage');
 
 describe('Storage root', function() {
   context('for public exposed modules', function() {

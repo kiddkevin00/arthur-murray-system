@@ -1,4 +1,4 @@
-const constants = require('../../../lib/constants/');
+const constants = require('../../../lib/constants');
 
 describe('Constants root', function() {
   context(

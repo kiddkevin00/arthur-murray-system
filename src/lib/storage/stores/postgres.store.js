@@ -1,5 +1,5 @@
 const BaseStore = require('./base');
-const constants = require('../../constants/');
+const constants = require('../../constants');
 const packageJson = require('../../../../package.json');
 const Sequelize = require('sequelize');
 

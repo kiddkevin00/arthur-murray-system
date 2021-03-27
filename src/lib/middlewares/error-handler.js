@@ -1,5 +1,5 @@
 const ValidationError = require('../utils/validation-error');
-const constants = require('../constants/');
+const constants = require('../constants');
 
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {

@@ -3,7 +3,7 @@
  */
 
 const setupExpressServer = require('./servers/express.server');
-const setupRoutes = require('./routes/');
+const setupRoutes = require('./routes');
 const packageJson = require('../../package.json');
 const express = require('express');
 const http = require('http');
