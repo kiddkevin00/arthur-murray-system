@@ -75,7 +75,7 @@
     "debug": "node --debug --debug-brk src/lib/app.js"
   },
   "engines": {
-    "node": "8.9.4",
+    "node": "10.18.0",
     "npm": ">=5.6.0"
   },
   "dependencies": {
